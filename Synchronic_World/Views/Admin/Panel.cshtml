@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Panel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.ActionLink("Return to events", "Event", "Event")
+
+<h2>Admin panel</h2>
+<div id="admContent">
+    <a href="/Admin/manageUsers" id="admButton">Manage users</a>
+    <a href="/Admin/manageEvents" id="admButton">Manage events</a>
+</div>

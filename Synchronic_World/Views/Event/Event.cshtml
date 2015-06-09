@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Synchronic_World.Models.Event>
+
+@{
+    ViewBag.Title = "Events";
+}
+
+<div id="eventContent">
+    <div class="topActions">
+        <a>Events</a>
+    </div>
+    @foreach (var evt in Model)
+    {
+        <div class="event">
+            <div class="leftSide">
+                <h3>@evt.name</h3>
+                <p>@evt.desc</p>
+                <p><img src="~/Content/img/pointeur.png" class="pointeur" /> @evt.adress</p>
+            </div>
+            <div class="rightSide">
+                <div class="date">
+                    <h4>@evt.date.Day/@evt.date.Month/@evt.date.Year</h4>
+                    <h5>at @evt.hour</h5>
+                    @if (evt.type == 0)
+                    {
+                        <p>Party</p>
+                    }
+                    else if (evt.type == 1)
+                    {
+                        <p>Lunch</p>
+                    }
+                    else if (evt.type == 2)
+                    {
+                        <p>Concert</p>
+                    }
+                    else if (evt.type == 3)
+                    {
+                        <p>Birthday</p>
+                    }
+                    else if (evt.type == 4)
+                    {
+                        <p>Travel</p>
+                    }
+                    else if (evt.type == 5)
+                    {
+                        <p>Sport</p>
+                    }
+                    else if (evt.type == 6)
+                    {
+                        <p>Work</p>
+                    }
+                </div>
+                <div class="infos">
+                    @if (evt.status == "0")
+                    {
+                        <p>Status : pending</p>
+                    }
+                    else if (evt.status == "1")
+                    {
+                        <p>Status : open</p>
+                    }
+                    else if (evt.status == "2")
+                    {
+                        <p>Status : closed</p>
+                    }
+                    
+                    @if (Session["LoggedUserRole"] as String == "1")
+                    {
+                        <a href="/Event/editEvent/@evt.Id" id="edit">Edit</a>
+                        <a href="/Event/deleteEvent/@evt.Id" id="delete">Delete</a>
+                    }
+                    
+                    @if (evt.status == "0" || evt.status == "1")
+                    {
+                        <a href="/Contribution/Contribution/@evt.Id" id="lock">Add a contribution</a>
+                        <a href="/Contribution/seeContributions/@evt.Id" id="lock">See</a>
+                    }
+                        
+                    @if (evt.status == "1")
+                    {
+                        <button class="participate pYes">Participate</button>
+                    }
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    }
+    <div class="clear"></div>
+    @if (ViewBag != null)
+    {
+        <p style="color:red;">@ViewBag.Error</p>
+    }
+    
+</div>

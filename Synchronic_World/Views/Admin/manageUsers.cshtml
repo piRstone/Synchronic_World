@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Synchronic_World.Models.User>
+
+@{
+    ViewBag.Title = "manageUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.ActionLink("Return to panel", "Panel", "Admin")
+
+<h2>Manage users</h2>
+
+<div id="admContent">
+    <table>
+        <tbody>
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Birthday</th>
+                <th>Mail</th>
+                <th>Role</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            @foreach (var usr in Model)
+            {
+                <tr>
+                    <td>@usr.firstname</td>
+                    <td>@usr.lastname</td>
+                    <td>@usr.birthday</td>
+                    <td>@usr.mail</td>
+                    <td>@usr.role</td>
+                    <td><a href="/Admin/editUser/@usr.Id" class="edit">Edit</a></td>
+                    <td><a href="/Admin/deleteUser/@usr.Id" class="delete">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <a href="/Admin/createUser" id="admButton">Create new user</a>
+</div>

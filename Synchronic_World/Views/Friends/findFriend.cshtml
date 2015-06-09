@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Synchronic_World.Models.User>
+
+@{
+    ViewBag.Title = "Add friends";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add friends</h2>
+<div id="admContent">
+    <a href="/Friends/myFriends" class="friends">See my friends</a>
+
+    @using (Html.BeginForm())
+    {
+        <p>
+            Find by name: @Html.TextBox("searchFriend")
+            <input type="submit" value="Search" />
+        </p>
+    }
+
+    <table>
+        <tr>
+            <th>
+                @Html.ActionLink("Lastname", "addFriend", "Friends", new { sortOrder = ViewBag.NameSortParm })
+            </th>
+            <th>
+                @Html.ActionLink("Firstname", "addFriend", "Friends", new { sortOrder = ViewBag.DateSortParm })
+            </th>
+            <th>Add</th>
+        </tr>
+
+        @foreach (var usr in Model)
+        {
+            <tr>
+                <td>@usr.lastname</td>
+                <td>@usr.firstname</td>
+                <td><a href="/Friends/addFriend/@usr.Id" class="edit">Add</a></td>
+            </tr>
+        }
+    </table>
+    @if (ViewBag != null)
+    {
+        <span style="color:green; display:block;">@ViewBag.Ok</span>
+    }
+    
+</div>

@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="synchronicDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ContributionSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+          <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="type" Type="int" Nullable="false" />
+          <Property Name="User_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EventSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="desc" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="adress" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="hour" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="type" Type="int" Nullable="false" />
+          <Property Name="status" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FriendsSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userId" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="friendId" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserEvent">
+          <Key>
+            <PropertyRef Name="participatingUser_Id" />
+            <PropertyRef Name="participatingEvent_Id" />
+          </Key>
+          <Property Name="participatingUser_Id" Type="int" Nullable="false" />
+          <Property Name="participatingEvent_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstname" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="lastname" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="birthday" Type="datetime" Nullable="false" />
+          <Property Name="mail" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="role" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_EventContribution">
+          <End Role="EventSet" Type="Self.EventSet" Multiplicity="1" />
+          <End Role="ContributionSet" Type="Self.ContributionSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ContributionSet">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserContribution">
+          <End Role="UserSet" Type="Self.UserSet" Multiplicity="1" />
+          <End Role="ContributionSet" Type="Self.ContributionSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ContributionSet">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserEvent_Event">
+          <End Role="EventSet" Type="Self.EventSet" Multiplicity="1" />
+          <End Role="UserEvent" Type="Self.UserEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserEvent">
+              <PropertyRef Name="participatingEvent_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserEvent_User">
+          <End Role="UserSet" Type="Self.UserSet" Multiplicity="1" />
+          <End Role="UserEvent" Type="Self.UserEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserEvent">
+              <PropertyRef Name="participatingUser_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="synchronicDBModelStoreContainer">
+          <EntitySet Name="ContributionSet" EntityType="Self.ContributionSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventSet" EntityType="Self.EventSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FriendsSet" EntityType="Self.FriendsSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserEvent" EntityType="Self.UserEvent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserSet" EntityType="Self.UserSet" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EventContribution" Association="Self.FK_EventContribution">
+            <End Role="EventSet" EntitySet="EventSet" />
+            <End Role="ContributionSet" EntitySet="ContributionSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserContribution" Association="Self.FK_UserContribution">
+            <End Role="UserSet" EntitySet="UserSet" />
+            <End Role="ContributionSet" EntitySet="ContributionSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserEvent_Event" Association="Self.FK_UserEvent_Event">
+            <End Role="EventSet" EntitySet="EventSet" />
+            <End Role="UserEvent" EntitySet="UserEvent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserEvent_User" Association="Self.FK_UserEvent_User">
+            <End Role="UserSet" EntitySet="UserSet" />
+            <End Role="UserEvent" EntitySet="UserEvent" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="synchronicDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="synchronicDBEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="UserSet" EntityType="synchronicDBModel.User" />
+          <EntitySet Name="EventSet" EntityType="synchronicDBModel.Event" />
+          <AssociationSet Name="UserEvent" Association="synchronicDBModel.UserEvent">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="Event" EntitySet="EventSet" />
+          </AssociationSet>
+          <EntitySet Name="ContributionSet" EntityType="synchronicDBModel.Contribution" />
+          <AssociationSet Name="EventContribution" Association="synchronicDBModel.EventContribution">
+            <End Role="Event" EntitySet="EventSet" />
+            <End Role="Contribution" EntitySet="ContributionSet" />
+          </AssociationSet>
+          <AssociationSet Name="UserContribution" Association="synchronicDBModel.UserContribution">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="Contribution" EntitySet="ContributionSet" />
+          </AssociationSet>
+          <EntitySet Name="FriendsSet" EntityType="synchronicDBModel.Friends" />
+        </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstname" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="lastname" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="birthday" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="mail" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="participatingEvent" Relationship="synchronicDBModel.UserEvent" FromRole="User" ToRole="Event" />
+          <Property Name="role" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Contribution" Relationship="synchronicDBModel.UserContribution" FromRole="User" ToRole="Contribution" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="desc" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="participatingUser" Relationship="synchronicDBModel.UserEvent" FromRole="Event" ToRole="User" />
+          <Property Name="adress" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="eventContribution" Relationship="synchronicDBModel.EventContribution" FromRole="Event" ToRole="Contribution" />
+          <Property Name="hour" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="type" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <Association Name="UserEvent">
+          <End Type="synchronicDBModel.User" Role="User" Multiplicity="*" />
+          <End Type="synchronicDBModel.Event" Role="Event" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Contribution">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="contributionEvent" Relationship="synchronicDBModel.EventContribution" FromRole="Contribution" ToRole="Event" />
+          <Property Name="EventId" Type="Int32" Nullable="false" />
+          <Property Name="type" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="synchronicDBModel.UserContribution" FromRole="Contribution" ToRole="User" />
+        </EntityType>
+        <Association Name="EventContribution">
+          <End Type="synchronicDBModel.Event" Role="Event" Multiplicity="1" />
+          <End Type="synchronicDBModel.Contribution" Role="Contribution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contribution">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserContribution">
+          <End Type="synchronicDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="synchronicDBModel.Contribution" Role="Contribution" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Friends">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userId" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="friendId" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="synchronicDBModelStoreContainer" CdmEntityContainer="synchronicDBEntities">
+    <EntitySetMapping Name="UserSet">
+      <EntityTypeMapping TypeName="IsTypeOf(synchronicDBModel.User)">
+        <MappingFragment StoreEntitySet="UserSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="firstname" ColumnName="firstname" />
+          <ScalarProperty Name="lastname" ColumnName="lastname" />
+          <ScalarProperty Name="birthday" ColumnName="birthday" />
+          <ScalarProperty Name="mail" ColumnName="mail" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="role" ColumnName="role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EventSet">
+      <EntityTypeMapping TypeName="IsTypeOf(synchronicDBModel.Event)">
+        <MappingFragment StoreEntitySet="EventSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="desc" ColumnName="desc" />
+          <ScalarProperty Name="adress" ColumnName="adress" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="hour" ColumnName="hour" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContributionSet">
+      <EntityTypeMapping TypeName="IsTypeOf(synchronicDBModel.Contribution)">
+        <MappingFragment StoreEntitySet="ContributionSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="EventId" ColumnName="EventId" />
+          <ScalarProperty Name="type" ColumnName="type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FriendsSet">
+      <EntityTypeMapping TypeName="IsTypeOf(synchronicDBModel.Friends)">
+        <MappingFragment StoreEntitySet="FriendsSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="friendId" ColumnName="friendId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UserEvent" TypeName="synchronicDBModel.UserEvent" StoreEntitySet="UserEvent">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="participatingUser_Id" />
+      </EndProperty>
+      <EndProperty Name="Event">
+        <ScalarProperty Name="Id" ColumnName="participatingEvent_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UserContribution" TypeName="synchronicDBModel.UserContribution" StoreEntitySet="ContributionSet">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="User_Id" />
+      </EndProperty>
+      <EndProperty Name="Contribution">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

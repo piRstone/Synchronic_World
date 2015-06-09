@@ -1,0 +1,74 @@
+﻿@model Synchronic_World.Models.Event
+
+@{
+    ViewBag.Title = "Create a new event";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create an event</h2>
+
+<div id="createEventContent">
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @using (Html.BeginForm(actionName: "createEvent", controllerName: "Event", method: FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.name)
+            @Html.ValidationMessageFor(model => model.name)
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.desc)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.desc)
+            @Html.ValidationMessageFor(model => model.desc)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.adress)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.adress)
+            @Html.ValidationMessageFor(model => model.adress)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.date)
+            @Html.EditorFor(model => model.date, new { type = "date" })
+            @Html.ValidationMessageFor(model => model.date)
+            @Html.LabelFor(model => model.hour)
+            <p>Type the hour with this format: hh:mm</p>
+            @Html.EditorFor(model => model.hour, new { @type = "time", @placeholder = "12:45" })
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.type)
+            <select name="type" id="type">
+                <option value="0">Party</option>
+                <option value="1">Lunch</option>
+                <option value="2">Concert</option>
+                <option value="3">Birthday</option>
+                <option value="4">Travel</option>
+                <option value="5">Sport</option>
+                <option value="6">Work</option>
+            </select>
+        </div>
+        
+        <p>
+            <button type="submit">Create</button>
+        </p>
+
+        if (ViewBag != null)
+        {
+            <p style="color:red;">@ViewBag.Error</p>
+            <p style="color:green;">@ViewBag.Message</p>
+        }
+    }
+</div>

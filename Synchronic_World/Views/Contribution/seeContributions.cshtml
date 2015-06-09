@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Synchronic_World.Models.Contribution>
+
+@{
+    ViewBag.Title = "Contributions";
+}
+@Html.ActionLink("Return to events", "Event", "Event")
+
+<h2>Contributions</h2>
+
+<div id="admContent">
+    <table>
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Type</th>
+            </tr>
+            @foreach (var ctr in Model)
+            {
+                if (ctr.EventId == Convert.ToInt32((ViewContext.RouteData.Values["id"])))
+                {
+                    <tr>
+                        <td>@ctr.name</td>
+                        <td>@ctr.quantity</td>
+                        @if (ctr.type.ToString() == "0")
+                        {
+                            <td>Drink</td>
+                        }
+                        else if (ctr.type.ToString() == "1")
+                        {
+                            <td>Food</td>
+                        }
+                        else if (ctr.type.ToString() == "2")
+                        {
+                            <td>Money</td>
+                        }
+                        else if (ctr.type.ToString() == "3")
+                        {
+                            <td>Material</td>
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

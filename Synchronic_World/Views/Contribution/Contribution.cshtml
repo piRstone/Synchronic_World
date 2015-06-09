@@ -1,0 +1,59 @@
+﻿@model Synchronic_World.Models.Contribution
+
+@{
+    ViewBag.Title = "Contribution";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.ActionLink("Return to events", "Event", "Event")
+
+<div id="registerContent">
+    <h2>Contribution</h2>
+
+    @using (Html.BeginForm(actionName: "Contribution", controllerName: "Contribution", method: FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <div class="donottouch">
+            <div class="filtre"></div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.EventId)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.EventId)
+                <p style="color:darkred; font-weight:bold">Please, don't change this</p>
+            </div>
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.name)
+            @Html.ValidationMessageFor(model => model.name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.quantity)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.quantity, new { type = "number" })
+            @Html.ValidationMessageFor(model => model.quantity)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.type)
+            <select name="type" id="type">
+                <option value="0">drink</option>
+                <option value="1">food</option>
+                <option value="2">money</option>
+                <option value="3">material</option>
+            </select>
+        </div>
+
+        <p>
+            <button type="submit">Done</button>
+        </p>
+        }
+
+    </div>

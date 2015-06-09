@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b9da83f3864f4ebfb64abcfa7dc2a593" Name="Diagram1" >
+        <EntityTypeShape EntityType="synchronicDBModel.User" Width="1.5" PointX="1.5" PointY="1.125" />
+        <EntityTypeShape EntityType="synchronicDBModel.Event" Width="1.5" PointX="4.375" PointY="1.125" />
+        <AssociationConnector Association="synchronicDBModel.UserEvent" />
+        <EntityTypeShape EntityType="synchronicDBModel.Contribution" Width="1.5" PointX="7.25" PointY="1.125" />
+        <AssociationConnector Association="synchronicDBModel.EventContribution" />
+        <AssociationConnector Association="synchronicDBModel.UserContribution" />
+        <EntityTypeShape EntityType="synchronicDBModel.Friends" Width="1.5" PointX="6.625" PointY="4" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

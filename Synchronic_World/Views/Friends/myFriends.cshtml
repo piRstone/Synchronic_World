@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Synchronic_World.Models.Friends>
+
+@{
+    ViewBag.Title = "My friends";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>My friends</h2>
+<div id="admContent">
+    <table>
+        <tr>
+            <th>
+                Friend id
+            </th>
+            <th>
+                Firstname
+            </th>
+            <th>Del</th>
+        </tr>
+
+        @foreach (var friend in Model)
+        {
+            <tr>
+                <td>@friend.friendId</td>
+                <td>Null</td>
+                <td><a>Delete</a></td>
+            </tr>
+        }
+    </table>
+</div>

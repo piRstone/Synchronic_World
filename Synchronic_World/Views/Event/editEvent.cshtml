@@ -1,0 +1,84 @@
+﻿@model Synchronic_World.Models.Event
+
+@{
+    ViewBag.Title = "editEvent";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create an event</h2>
+
+<div id="createEventContent">
+
+    @Html.ValidationSummary(true)
+    @using (Html.BeginForm()) {
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.name)
+            @Html.ValidationMessageFor(model => model.name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.desc)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.desc)
+            @Html.ValidationMessageFor(model => model.desc)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.adress)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.adress)
+            @Html.ValidationMessageFor(model => model.adress)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.date)
+            @Html.EditorFor(model => model.date, new { type = "date" })
+            @Html.ValidationMessageFor(model => model.date)
+            @Html.LabelFor(model => model.hour)
+            @Html.EditorFor(model => model.hour, new { type = "time" })
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.type)
+            <select name="type" id="type">
+                <option value="0">Party</option>
+                <option value="1">Lunch</option>
+                <option value="2">Concert</option>
+                <option value="3">Birthday</option>
+                <option value="4">Travel</option>
+                <option value="5">Sport</option>
+                <option value="6">Work</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.date)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.status)
+            <label for="pending" class="radioLabels">pending</label>
+            @Html.RadioButtonFor(model => model.status, "0", new { id = "pending" })
+            <label for="open" class="radioLabels">open</label>
+            @Html.RadioButtonFor(model => model.status, "1", new { id = "open" })
+            <label for="closed" class="radioLabels">closed</label>
+            @Html.RadioButtonFor(model => model.status, "2", new { id = "closed" })
+            @Html.ValidationMessageFor(model => model.status)
+        </div>
+
+        <p>
+            <button type="submit">Edit</button>
+        </p>
+
+        if (ViewBag != null)
+        {
+            <p style="color:red;">@ViewBag.Error</p>
+            <p style="color:green;">@ViewBag.Message</p>
+        }
+    }
+</div>

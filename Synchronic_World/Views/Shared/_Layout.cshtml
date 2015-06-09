@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="icon" type="image/png" href="~/Content/img/favicon.png" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    @if (Session["LoggedUserId"] == null) { 
+        <header>
+            <a href="/Home/Index">
+                <img src="~/Content/img/SW_logo.png" alt="logo" class="hlogo" />
+                <h1 class="htitle">Synchronic World</h1>
+            </a>
+            <div class="connexions">
+                @Html.ActionLink("Sign up", "Register", "User")
+                @Html.ActionLink("Login", "Login", "User")
+            </div>
+        </header>
+    }
+    else
+    {
+        <header>
+            <a href="/Home/Index">
+                <img src="~/Content/img/SW_logo.png" alt="logo" class="hlogo" />
+                <h1 class="htitle">Synchronic World</h1>
+            </a>
+            <div class="connexions">
+                @if (Session["LoggedUserRole"] as String == "1")
+                {
+                    @Html.ActionLink("Admin panel", "Panel", "Admin")
+                }
+                @Html.ActionLink("Create an event", "createEvent", "Event")
+                @Html.ActionLink("Add friend", "findFriend", "Friends")
+                <a href="/User/userProfile/@Session["LoggedUserId"]">Profile</a>
+                @Html.ActionLink("Disconnect", "Disconnect", "User")
+            </div>
+</header>
+    }
+
+    @RenderBody()
+
+    @*<footer>
+        <p>&copy; Pierre Lavalley - 2015</p>
+    </footer>*@
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

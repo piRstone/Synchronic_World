@@ -1,0 +1,74 @@
+﻿@model Synchronic_World.Models.User
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="registerContent">
+
+    <h2>My Profile</h2>
+
+    @using (Html.BeginForm(actionName: "userProfile", controllerName: "User", method: FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.firstname)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.firstname)
+            @Html.ValidationMessageFor(model => model.firstname)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.lastname)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.lastname)
+            @Html.ValidationMessageFor(model => model.lastname)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.birthday)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.birthday)
+            @Html.ValidationMessageFor(model => model.birthday)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.mail)<span class="required">&nbsp;*</span>
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.mail)
+            @Html.ValidationMessageFor(model => model.mail)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.password)<span class="required">&nbsp;*</span>
+        </div>
+        <div class="editor-field">
+            @Html.PasswordFor(model => model.password)
+            @Html.ValidationMessageFor(model => model.password)
+        </div>
+
+        <p>
+            <button type="submit">Save changes</button>
+        </p>
+
+        if (ViewBag != null)
+        {
+            <p style="color:green;">@ViewBag.Message</p>
+            <p style="color:red;">@ViewBag.Error</p>
+        }
+    }
+
+    @*<a href="/User/resetPassword/@Session["LoggedUserId"]" class="resetPsswd">Reset password</a>*@
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
